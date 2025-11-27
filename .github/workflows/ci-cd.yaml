@@ -35,6 +35,12 @@ jobs:
           pip install -r requirements.txt          
           pip install pytest wheel twine build
 
+      - name: Build and install your package
+        run: |
+          python -m build
+          # Install the built wheel into the current environment
+          pip install dist/*.whl
+
 
       - name: Run tests
         run: pytest -q
