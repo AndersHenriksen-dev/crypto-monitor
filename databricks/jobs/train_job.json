@@ -1,0 +1,13 @@
+{
+    "name": "crypto-train-job",
+    "tasks": [
+    {
+        "task_key": "train_task",
+        "python_wheel_task": {
+            "package_name": "crypto_monitor",
+            "entry_point": "crypto-train"
+        },
+        "existing_cluster_id": "<CLUSTER_ID>"
+    }
+    ]
+}

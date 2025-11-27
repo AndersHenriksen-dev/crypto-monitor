@@ -1,0 +1,18 @@
+{
+    "name": "crypto-ingest-job",
+    "tasks": [
+    {
+        "task_key": "ingest_task",
+        "python_wheel_task": {
+            "package_name": "crypto_monitor",
+            "entry_point": "crypto-ingest"
+        },
+        "existing_cluster_id": "<CLUSTER_ID>",
+        "email_notifications": {}
+    }
+    ],
+    "schedule": {
+        "quartz_cron_expression": "0 0/5 * * * ? *",
+        "timezone_id": "UTC"
+    }
+}
