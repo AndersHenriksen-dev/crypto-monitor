@@ -1,5 +1,3 @@
-
-
 def create_lag_features(df, price_col='price', lags=(1, 3, 6, 12)):
     df = df.sort_values('timestamp_utc').copy()
 
