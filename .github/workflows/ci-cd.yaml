@@ -40,31 +40,18 @@ jobs:
       - name: Run tests
         run: pytest -q
 
-      - name: Build wheel
+      - name: Install Build Tools
         run: |
-          # Clean old wheels
-          rm -rf dist/
-          python -m build
+          pip install wheel databricks-cli
 
-        # 7. Deploy to Databricks as Asset Bundle
-      - name: Deploy to Databricks
+      - name: Build the wheel
+        run: |
+          rm -rf dist/
+          python setup.py bdist_wheel  # generates dist/*.whl
+
+      - name: Upload Wheel to DBFS
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          WHEEL=$(ls dist/*.whl | head -n1)
-          echo "Deploying wheel $WHEEL as Databricks asset bundle..."
-          
-          # Create or update the asset bundle
-          databricks assets create \
-            --name my_app \
-            --type python_wheel \
-            --file "$WHEEL" \
-            --overwrite
-          
-          echo "Asset bundle deployed successfully."
-
-      # 8. Optional: update a Databricks job to use this asset
-      # You can maintain a JSON job config and call:
-      # databricks jobs create --json-file job_config.json
-      # or databricks jobs reset --json-file job_config.json
+          databricks fs cp dist/*.whl dbfs:/FileStore/libs/ --overwrite
