@@ -4,7 +4,6 @@ This is meant to run as a Job task (python file task) or as part of a wheel.
 """
 import os
 from crypto_monitor.etl.binance_ingest import fetch_symbol_price
-from crypto_monitor.utils.logging_utils import setup_logging
 from crypto_monitor.utils.spark import get_spark
 from crypto_monitor.utils.logging_utils import get_logger, setup_logging, log_function_execution
 

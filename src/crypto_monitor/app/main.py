@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Optional
 from crypto_monitor.app.model_loader import load_registered_model
-import pandas as pd
 
 
 app = FastAPI(title='Crypto Monitor API')

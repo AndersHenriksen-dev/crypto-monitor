@@ -1,11 +1,8 @@
-from math import log
 import pandas as pd
 import mlflow
 from pyspark.sql import SparkSession
 from prophet import Prophet
 from py4j.protocol import Py4JJavaError
-from requests import get
-import logging
 
 from crypto_monitor.utils.logging_utils import setup_logging, get_logger, log_function_execution
 
@@ -25,7 +22,7 @@ def load_training_data():
         pdf = df.toPandas()
         pdf = pdf.rename(columns={"timestamp_utc": "ds", "price": "y"})
 
-    except (ImportError, Py4JJavaError, OSError) as e:
+    except (ImportError, Py4JJavaError, OSError):
         # Local fallback: Parquet / CSV
         pdf = pd.read_parquet("data/")
         pdf = pdf.rename(columns={"timestamp_utc": "ds", "price": "y"})

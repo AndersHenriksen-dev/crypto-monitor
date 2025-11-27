@@ -1,4 +1,3 @@
-import os
 import mlflow
 import pandas as pd
 from py4j.protocol import Py4JJavaError
@@ -27,7 +26,7 @@ def load_features(delta_path: str, symbol: str):
         )
         pdf = df.toPandas()
 
-    except (ImportError, Py4JJavaError, OSError) as e:
+    except (ImportError, Py4JJavaError, OSError):
         # Local fallback
         pdf = pd.read_parquet(delta_path)
         pdf = pdf[pdf["symbol"] == symbol]

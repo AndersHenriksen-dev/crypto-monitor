@@ -12,5 +12,5 @@ def get_spark():
         from pyspark.sql import SparkSession as _SS
         return _SS.builder.getOrCreate()
 
-    except (ImportError, Py4JJavaError, OSError) as e:
+    except (ImportError, Py4JJavaError, OSError):
         return SparkSession.builder.master('local[*]').appName('crypto-monitor').getOrCreate()
