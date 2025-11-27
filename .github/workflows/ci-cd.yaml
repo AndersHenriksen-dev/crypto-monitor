@@ -44,6 +44,11 @@ jobs:
       - name: Build wheel
         run: python -m build
 
+      - name: Build wheel
+        run: |
+          # Clean old wheels
+          rm -rf dist/
+          python -m build
 
       - name: Upload wheel to Databricks Workspace
         env:
@@ -52,11 +57,9 @@ jobs:
         run: |
           pip install databricks-cli
 
-          # authenticate
-          databricks configure --token <<EOF
-          ${{ secrets.DATABRICKS_HOST }}
-          ${{ secrets.DATABRICKS_TOKEN }}
-          EOF
-          # create workspace dir and upload wheel
-          WHEEL=$(ls dist/*.whl | head -n1)
+          # create workspace dir (ignore error if exists)
           databricks workspace mkdirs /Repos/${{ github.repository }} || true
+
+          # upload wheel
+          WHEEL=$(ls dist/*.whl | head -n1)
+          databricks workspace import --overwrite "$WHEEL" /Repos/${{ github.repository }}/$(basename "$WHEEL")
