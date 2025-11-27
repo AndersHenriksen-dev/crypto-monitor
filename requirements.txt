@@ -12,3 +12,4 @@ pyspark
 pytest
 Requests
 setuptools
+databricks-cli
