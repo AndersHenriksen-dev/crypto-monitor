@@ -1,0 +1,76 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crypto-monitor"
+version = "0.1.0"
+description = "Crypto monitoring + forecasting pipeline for Databricks"
+authors = [
+    { name = "Your Name", email = "you@example.com" },
+]
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    # HTTP ingestion
+    "requests>=2.31.0",
+
+    # Data processing / Spark
+    "pyspark>=3.5.0",
+    "delta-spark>=3.2.0",
+    "numpy>=2.3.5",
+    "pandas>=2.3.3",
+    "py4j>=0.10.9.9",
+    "pyarrow>=22.0.0",
+
+    # ML / forecasting
+    "prophet>=1.1.5",
+    "mlflow>=2.12.1",
+
+    # API app
+    "fastapi>=0.110.0",
+    "uvicorn>=0.29.0",
+
+    # Utilities
+    "pydantic>=2.6.0",
+    "python-dotenv>=1.0.1",
+
+    # App building / CI/CD
+]
+
+# Optional features
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "black",
+    "ruff",
+    "mypy",
+]
+
+[tool.setuptools]
+packages = ["crypto_monitor"]
+package-dir = { "" = "src" }
+
+[tool.setuptools.package-data]
+crypto_monitor = ["py.typed"]
+
+# Formatting – optional but helpful
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_unused_configs = true
+warn_unused_ignores = true
+warn_return_any = false
+strict_optional = true
+
+# Create whl file: python -m build --wheel
